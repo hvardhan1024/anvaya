@@ -1,6 +1,5 @@
 import { loadScene } from './components/SceneLoader';
 
-
 function simulateKeyboardEvent(key, eventType) {
     const event = new KeyboardEvent(eventType, {
       key: key,
@@ -13,13 +12,46 @@ function simulateKeyboardEvent(key, eventType) {
   
   const keys = ["w", "a", "s", "d"];
   
-  keys.forEach((key) => {
-    const element = document.querySelector(`.key-display.control-${key}`);
-    if (element) {
-      element.addEventListener("mousedown", () => simulateKeyboardEvent(key, "keydown"));
-      element.addEventListener("mouseup", () => simulateKeyboardEvent(key, "keyup"));
-    }
-  });
+  let checkInterval = setInterval(() => {
+    keys.forEach((key) => {
+      const element = document.querySelector(`.key-display.control-${key}`);
+      console.log(element);
+      if (element) {
+        // Handle mouse click events
+        element.addEventListener("click", () => {
+          console.log("Mouse click detected");
+          simulateKeyboardEvent(key, "keydown");
+        });
+  
+        // Handle mouse up events
+        element.addEventListener("mouseup", () => {
+          console.log("Mouse up detected");
+          simulateKeyboardEvent(key, "keyup");
+        });
+  
+        // Handle touch start events
+        element.addEventListener("touchstart", (e) => {
+          console.log("Touch start detected");
+          e.preventDefault();  // Prevent default touch behavior
+          simulateKeyboardEvent(key, "keydown");
+        });
+  
+        // Handle touch end events
+        element.addEventListener("touchend", (e) => {
+          console.log("Touch end detected");
+          e.preventDefault();  // Prevent default touch behavior
+          simulateKeyboardEvent(key, "keyup");
+        });
+  
+        // Once the element is found and event listeners are added, stop the interval check
+        clearInterval(checkInterval);
+      }
+    });
+  }, 1000); // Check every 1 second
+  
+  
+  
+
 
 /**
  * Sizes

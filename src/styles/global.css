@@ -66,6 +66,7 @@ canvas.webgl{
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   transition: scale 0.05s ease, background-color 0.2s ease, color 0.2s ease;
+  user-select: none;
 }
 
 .key-display.active {
