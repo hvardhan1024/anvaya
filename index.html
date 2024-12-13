@@ -5,10 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <link rel="icon" type="image/x-icon" href="/logo.ico">
     <title>Anvaya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/src/styles/global.css">
   </head>
   <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
+    <canvas class="webgl"></canvas>
+
+
+    <div class="control-menu">
+      <i class="fa-solid fa-circle-info" id="info-btn"></i>
+      <i class="fa-solid fa-gear" id="settings-btn"></i>
+  </div>
+
+
+    <!-- Info Card -->
+    <div class="info-card" id="info-card">
+      <button class="close-btn" id="info-close">&times;</button>
+      <h2>Project Info</h2>
+      <p>This project demonstrates a settings panel with toggle functionality and a glass morphism info card. Customize the visibility of elements and learn about this UI!</p>
+  </div>
+
+  <!-- Settings Panel -->
+  <div class="settings-panel" id="settings-panel">
+      <label>
+          <input type="checkbox" id="toggle-key-display" checked>
+          Show/Hide Key Display
+      </label>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
   </body>
 </html>
