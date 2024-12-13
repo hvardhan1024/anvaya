@@ -5,6 +5,9 @@ export const D = "d";
 export const SHIFT = "shift";
 export const DIRECTIONS = [W, A, S, D];
 
+// Global object to track pressed keys
+export const keysPressed = {};
+
 export class KeyDisplay {
   constructor() {
     this.map = new Map();
@@ -13,13 +16,11 @@ export class KeyDisplay {
     const a = this.createKeyElement(A);
     const s = this.createKeyElement(S);
     const d = this.createKeyElement(D);
-    // const shift = this.createKeyElement(SHIFT);
 
     this.map.set(W, w);
     this.map.set(A, a);
     this.map.set(S, s);
     this.map.set(D, d);
-    // this.map.set(SHIFT, shift);
 
     const container = document.createElement("div");
     container.id = "key-display-container";
@@ -29,7 +30,8 @@ export class KeyDisplay {
     window.addEventListener("resize", this.updatePosition.bind(this));
     this.updatePosition();
 
-    this.addInfoAndSettings()
+    this.addInfoAndSettings();
+    this.addClickListeners(); // Add click event listeners for the keys
   }
 
   createKeyElement(key) {
@@ -42,22 +44,26 @@ export class KeyDisplay {
   updatePosition() {
     const container = document.getElementById("key-display-container");
     if (container) {
-      container.style.position = "fixed"; // Ensures the container is fixed relative to the viewport
-      container.style.bottom = "20px"; // Places the container 20px above the bottom of the screen
-      container.style.left = "20px"; // Places the container 20px from the left of the screen
-      container.style.transform = "none"; // No translation required for bottom-left alignment
+      container.style.position = "fixed";
+      container.style.bottom = "20px";
+      container.style.left = "20px";
+      container.style.transform = "none";
     }
   }
 
   down(key) {
-    if (this.map.get(key.toLowerCase())) {
-      this.map.get(key.toLowerCase()).classList.add("active");
+    const keyLower = key.toLowerCase();
+    if (this.map.get(keyLower)) {
+      this.map.get(keyLower).classList.add("active");
+      keysPressed[keyLower] = true; // Track key press state
     }
   }
 
   up(key) {
-    if (this.map.get(key.toLowerCase())) {
-      this.map.get(key.toLowerCase()).classList.remove("active");
+    const keyLower = key.toLowerCase();
+    if (this.map.get(keyLower)) {
+      this.map.get(keyLower).classList.remove("active");
+      keysPressed[keyLower] = false; // Track key release state
     }
   }
 
@@ -90,6 +96,17 @@ export class KeyDisplay {
     // Toggle Key Display Container
     toggleKeyDisplay.addEventListener("change", (e) => {
       keyDisplayContainer.style.display = e.target.checked ? "block" : "none";
+    });
+  }
+
+  addClickListeners() {
+    this.map.forEach((element, key) => {
+      element.addEventListener("mousedown", () => {
+        this.down(key);
+      });
+      element.addEventListener("mouseup", () => {
+        this.up(key);
+      });
     });
   }
 }

@@ -15,8 +15,10 @@ export class CharacterControls {
         this.rotateQuarternion = new THREE.Quaternion();
         this.cameraTarget = new THREE.Vector3();
         this.fadeDuration = 0.2; // Default fade duration
-        this.runVelocity = 16; // Run speed
+        this.runVelocity = 8; // Run speed
         this.walkVelocity = 3.4; // Walk speed
+
+        
 
         // Set up animations
         this.animationsMap.forEach((value, key) => {
@@ -33,6 +35,7 @@ export class CharacterControls {
         this.updateCameraTarget(0, 0);
     }
 
+    
     // Toggle between running and walking
     switchRunToggle() {
         this.toggleRun = !this.toggleRun;

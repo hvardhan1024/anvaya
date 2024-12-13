@@ -114,15 +114,6 @@ function loadGround(scene) {
     scene.add(cubeGeo2)
 
 
-    // trees
-    scene.add(createTree(10, 0));  // Center tree
-    scene.add(createTree(20, 5)); // Tree offset to the side
-    scene.add(createTree(35, -5)); // Another offset tree
-    scene.add(createTree(-65, -15)); // Another offset tree
-    scene.add(createTree(33, 33)); // Another offset tree
-    scene.add(createTree(22, 25)); // Another offset tree
-    scene.add(createTree(-5, 22)); // Another offset tree
-
     // TEXT
     new GLTFLoader().load('/models/TEXT/garden.glb', (gltf) => {
         const model = gltf.scene;
@@ -201,6 +192,8 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
                 keyDisplay.down(key);
             }
         });
+
+      
 
         document.addEventListener('keyup', (event) => {
             const key = event.key.toLowerCase();

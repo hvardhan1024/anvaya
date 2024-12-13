@@ -1,5 +1,26 @@
 import { loadScene } from './components/SceneLoader';
 
+
+function simulateKeyboardEvent(key, eventType) {
+    const event = new KeyboardEvent(eventType, {
+      key: key,
+      code: key.toUpperCase(),
+      bubbles: true,
+      cancelable: true,
+    });
+    document.dispatchEvent(event);
+  }
+  
+  const keys = ["w", "a", "s", "d"];
+  
+  keys.forEach((key) => {
+    const element = document.querySelector(`.key-display.control-${key}`);
+    if (element) {
+      element.addEventListener("mousedown", () => simulateKeyboardEvent(key, "keydown"));
+      element.addEventListener("mouseup", () => simulateKeyboardEvent(key, "keyup"));
+    }
+  });
+
 /**
  * Sizes
  */
@@ -14,7 +35,7 @@ window.addEventListener('resize',()=>{
     // camera.aspect= sizes.width/sizes.height
     // camera.updateProjectionMatrix()
 
-    renderer.setSize(sizes.width, sizes.height)
+    // renderer.setSize(sizes.width, sizes.height)
 
 })
 // full screen
