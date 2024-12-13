@@ -58,7 +58,7 @@ export class CharacterControls {
             // Transition between animations
             current.fadeOut(this.fadeDuration);
             toPlay.reset().fadeIn(this.fadeDuration).play();
-            console.log([...this.animationsMap.keys()]);
+            // console.log([...this.animationsMap.keys()]);
 
             this.currentAction = play;
         }

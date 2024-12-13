@@ -21,8 +21,8 @@ export function createGardenScene() {
 
     const orbitControls = new OrbitControls(camera, renderer.domElement);
     orbitControls.enableDamping = true;
-    orbitControls.minDistance = 5;
-    orbitControls.maxDistance = 7;
+    orbitControls.minDistance = 3;
+    orbitControls.maxDistance = 5;
     orbitControls.enablePan = false;
     orbitControls.maxPolarAngle = Math.PI / 2 - 0.05;
     orbitControls.update();
@@ -73,12 +73,12 @@ function setupLighting(scene) {
 }
 
 function loadGround(scene) {
-    const groundGeometry = new THREE.PlaneGeometry(500, 500);
-    const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x228b22 }); // Green for the garden
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.receiveShadow = true;
-    scene.add(ground);
+    // const groundGeometry = new THREE.PlaneGeometry(500, 500);
+    // const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x228b22 }); // Green for the garden
+    // const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    // ground.rotation.x = -Math.PI / 2;
+    // ground.receiveShadow = true;
+    // scene.add(ground);
 
     // const doorGeometry = new THREE.PlaneGeometry(5,10)
     // const doorMaterial = new THREE.MeshStandardMaterial({color: 0xff0000})
@@ -87,6 +87,16 @@ function loadGround(scene) {
     // doorToHerbalGarden.position.z = 20
     // scene.add(doorToHerbalGarden)
 
+       // Main Garden
+       new GLTFLoader().load('/models/garden-final.glb', (gltf) => {
+        const model = gltf.scene;
+        model.position.set(0,1,0)
+        // model.scale.set(0.15,0.15,0.15)
+        model.scale.set(3,3,3)
+        scene.add(model)
+
+    }
+    )
 
     const cubeGeometry = new THREE.BoxGeometry(10,10,10)
     const cubeGeoMesh = new THREE.MeshStandardMaterial({color: 0xFFC0CB })
@@ -124,15 +134,25 @@ function loadGround(scene) {
     )
 
     // FOG
-    const fogColor = new THREE.Color(0xD3D3D3); // Light gray color
-    scene.fog = new THREE.FogExp2(fogColor, 0.005);
+    // const fogColor = new THREE.Color('#708090'); // Light gray color
+    // scene.fog = new THREE.FogExp2(fogColor, 0.1);
 
+// bounding path
+ // TEXT
+ new GLTFLoader().load('/models/garden_bounds.glb', (gltf) => {
+    const model = gltf.scene;
+    model.position.set(0,1,0)
+    // model.scale.set(0.15,0.15,0.15)
+    model.scale.set(3,3,3)
+    scene.add(model)
 
+}
+)
     
 
     // hdri
     const rgbeLoader = new RGBELoader();
-    rgbeLoader.load('/models/forest2.hdr', (hdrTexture) => {
+    rgbeLoader.load('/models/thisiscool.hdr', (hdrTexture) => {
         hdrTexture.mapping = THREE.EquirectangularRefractionMapping;
         scene.background = hdrTexture;  // Set HDR as the background
         scene.environment = hdrTexture;  // Set HDR as the environment map for lighting
@@ -152,7 +172,8 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
         model.traverse((object) => {
             if (object.isMesh) object.castShadow = true;
         });
-        model.position.z= 50
+        model.position.z= 10
+        model.position.x= -14
         model.position.y = 0.8
         scene.add(model);
 
