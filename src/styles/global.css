@@ -108,3 +108,99 @@ scale: 1.1;
 }
 
 
+  /* Control Menu */
+  .control-menu {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.control-menu i {
+    font-size: 20px;
+    cursor: pointer;
+    color: #555;
+}
+
+.control-menu i:hover {
+    color: #007BFF;
+}
+
+/* Glassmorphism Info Card */
+.info-card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    color: #333;
+    z-index: 999;
+    display: none;
+}
+
+.info-card .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #f44336;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.info-card .close-btn:hover {
+    background: #d32f2f;
+}
+
+/* Settings Panel */
+.settings-panel {
+    position: fixed;
+    bottom: 60px;
+    right: 20px;
+    background: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    display: none;
+}
+
+.settings-panel label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 10px;
+    font-size: 14px;
+}
+
+.settings-panel input[type="checkbox"] {
+    cursor: pointer;
+}
+
+/* Key Display Container (Target for Toggle) */
+.key-display-container {
+    margin: 20px;
+    padding: 20px;
+    background: #e9ecef;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    display: block;
+}
