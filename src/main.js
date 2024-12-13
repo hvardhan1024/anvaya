@@ -1,4 +1,4 @@
-// import { loadScene } from './components/SceneLoader';
+import { loadScene } from './components/SceneLoader';
 
 /**
  * Sizes
@@ -28,5 +28,5 @@ window.addEventListener('dblclick',()=>{
 })
 
 
-// loadScene('garden'); // Load the initial scene
-// window.loadScene = loadScene; // Expose function globally for button click handling
+loadScene('garden'); // Load the initial scene
+window.loadScene = loadScene; // Expose function globally for button click handling
