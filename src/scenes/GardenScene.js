@@ -5,7 +5,6 @@ import { CharacterControls } from '../components/characterControls'; // Adjust p
 import { KeyDisplay, W, A, S, D, SHIFT } from '../components/utils'; // Import KeyDisplay and controls
 import { RGBELoader } from 'three/examples/jsm/Addons.js';
 import { createTree } from '../components/tree';
-import { create3DText } from '../components/customText';
 
 
 export function createGardenScene() {
@@ -114,12 +113,15 @@ function loadGround(scene) {
     scene.add(createTree(22, 25)); // Another offset tree
     scene.add(createTree(-5, 22)); // Another offset tree
 
-    // 3d texts 
-    // Create the scene and add 3D text
-(async () => {
-    await create3DText(scene, "HELLO WORLD", 0, 1,0 , 1);
-  })();
-  
+    // TEXT
+    new GLTFLoader().load('/models/TEXT/garden.glb', (gltf) => {
+        const model = gltf.scene;
+        model.position.set(0,8,0)
+        model.scale.set(0.15,0.15,0.15)
+        scene.add(model)
+
+    }
+    )
 
     const gltfLoader = new GLTFLoader()
 

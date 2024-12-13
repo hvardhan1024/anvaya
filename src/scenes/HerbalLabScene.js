@@ -5,7 +5,6 @@ import { CharacterControls } from '../components/characterControls'; // Adjust p
 import { KeyDisplay, W, A, S, D, SHIFT } from '../components/utils'; // Import KeyDisplay and controls
 import { RGBELoader } from 'three/examples/jsm/Addons.js';
 import { createTree } from '../components/tree';
-import { create3DText } from '../components/customText';
 
 
 
@@ -115,6 +114,17 @@ function loadGround(scene) {
     scene.add(createTree(33, 33)); // Another offset tree
     scene.add(createTree(22, 25)); // Another offset tree
     scene.add(createTree(-5, 22)); // Another offset tree
+
+
+        // TEXT
+        new GLTFLoader().load('/models/TEXT/herbal.glb', (gltf) => {
+            const model = gltf.scene;
+            model.position.set(0,8,0)
+            model.scale.set(0.15,0.15,0.15)
+            scene.add(model)
+    
+        }
+        )
 
     const gltfLoader = new GLTFLoader()
 
