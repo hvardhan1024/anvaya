@@ -1,0 +1,36 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+html,body{
+    overflow: hidden;
+}
+
+canvas.webgl{
+    position: fixed;
+    top: 0;
+    left: 0;
+    outline: none;
+}
+#navigation {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 100;
+  }
+
+  #navigation button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #navigation button:hover {
+    background-color: #0056b3;
+  }
