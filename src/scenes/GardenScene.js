@@ -35,6 +35,8 @@ export function createGardenScene() {
     setupLighting(scene);
     loadGround(scene);
     addPlants(scene);
+    addHomeopathy(scene)
+    addYoga(scene)
 
     const keysPressed = {}; // For tracking key presses
     const keyDisplay = new KeyDisplay(); // Visualize key presses
@@ -107,6 +109,72 @@ function setupLighting(scene) {
     directionalLight.position.set(5, 10, 7.5);
     directionalLight.castShadow = true;
     scene.add(directionalLight);
+}
+
+
+function addYoga(scene) {
+    // Load the GLB model
+    new GLTFLoader().load('/models/yoga/yoga_character.glb', (gltf) => {
+        const model = gltf.scene;
+        console.log(model);
+
+        // Set model position and scale
+        model.position.set(40, 1.13, -27.54);
+        model.scale.set(1.5, 1.5, 1.5);
+
+        // Add the model to the scene
+        scene.add(model);
+
+        // Load the animations
+        const animations = gltf.animations;
+        if (animations && animations.length) {
+            // Create an AnimationMixer for playing animations
+            const mixer = new THREE.AnimationMixer(model);
+
+            // Find the 'suryanamaskar' animation (assuming it is named 'suryanamaskar')
+            const animationClip = animations.find(animation => animation.name === 'surya namaskara');
+            if (animationClip) {
+                // Add the animation clip to the mixer
+                mixer.clipAction(animationClip).play();
+            }
+
+            // Update the mixer on each frame in the animation loop
+            function animate() {
+                mixer.update(0.01); // You can adjust the time step here for the animation speed
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    });
+}
+
+function addHomeopathy(scene){
+    const coordinates = [
+        [-25.067827896408208, 1.402312182167159, -18.7675033915934],
+        [-26.66578360884982, 1.402312173776966, -19.55693341172318],
+        [-28.26307570625974, 1.4023121846806457, -20.06017810892425],
+        [-29.77896268927036, 1.4023121800071645, -20.760372957668835],
+        [-31.17467401434882, 1.4023121713052515, -21.470244383414368],
+        [-32.58947987740616, 1.4023121696168332, -23.42104789446237],
+        [-32.038537931713265, 1.4023121717434845, -24.839853042136802],
+        [-31.54445714040098, 1.402312173163259, -26.094667783151117],
+        [-30.98514114825248, 1.402312172731669, -27.441706088119663],
+        [-30.464542747332636, 1.4023121762899584, -28.83816781751784],
+        [-28.073499184592702, 1.4023121720590537, -29.37333396403401],
+        [-26.53510342235665, 1.4023121652141883, -28.631594205183667],
+        [-24.943663146562958, 1.4023121711721935, -28.057497553869645],
+        [-23.507851044665266, 1.4023121722764325, -27.476249929543354],
+        [-21.702887628555352, 1.4023121853766707, -26.91911930295456]
+    ];
+    for (let index = 0; index < coordinates.length; index++) {
+        new GLTFLoader().load('/models/plants/plant.glb', (gltf) => {
+            const model = gltf.scene;
+            model.position.set(coordinates[index][0], coordinates[index][1], coordinates[index][2]);
+            model.scale.set(0.02, 0.02, 0.02);
+            scene.add(model);
+        });
+        
+      }
 }
 
 function addPlants(scene) {
