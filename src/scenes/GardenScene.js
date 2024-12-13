@@ -85,52 +85,33 @@ function loadGround(scene) {
     doorToHerbalGarden.position.x = 2
     scene.add(doorToHerbalGarden)
 
+
+    const cubeGeometry = new THREE.BoxGeometry(10,10,10)
+    const cubeGeoMesh = new THREE.MeshStandardMaterial({color: 0xFFC0CB })
+    const cubeGeo = new THREE.Mesh(cubeGeometry,cubeGeoMesh)
+    cubeGeo.position.z = 60
+    cubeGeo.position.x = 20
+    scene.add(cubeGeo)
+
+
+    const cubeGeometry2 = new THREE.BoxGeometry(10,10,10)
+    const cubeGeoMesh2 = new THREE.MeshStandardMaterial({color: 0xFFA500 })
+    const cubeGeo2 = new THREE.Mesh(cubeGeometry2,cubeGeoMesh2)
+    cubeGeo2.position.z = 20
+    cubeGeo2.position.x =60
+    scene.add(cubeGeo2)
+
+
     const gltfLoader = new GLTFLoader()
 
-    // let pathWay = null
-    // gltfLoader.load(
-    //     '/models/path_bounds.glb',
-    //     (glb)=>{
-    //         pathWay= glb.scene
-    //         pathWay.scale.set(10,10,10)
-    //         // pathWay.position.y = 2
-    //         scene.add(pathWay)
-    //     }
-    // )
+    // Other models
 
-    // let gardenBase = null
-    // gltfLoader.load(
-    //     '/models/garden_final.glb',
-    //     (glb)=>{
-    //         gardenBase = glb.scene
-    //         gardenBase.scale.set(10,10,10)
-    //         scene.add(gardenBase)
-    //     }
-    // )
-
-
- // Load the HDR image
-// const rgbeLoader = new RGBELoader();
-// rgbeLoader.load(
-//     '/environmentMap/forest.exr', // Path to your HDR file
-//     (texture) => {
-//         texture.mapping = THREE.EquirectangularReflectionMapping;
-//         scene.background = texture; // Set background to HDR texture
-//         scene.environment = texture; // Set environment map to HDR texture
-//         console.log(texture);
-//     },
-//     undefined,
-//     (error) => {
-//         console.error('Error loading HDR image:', error);
-//     }
-// );
-
-
+    // Load hdr here later
 
 }
 
 function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
-    new GLTFLoader().load('/models/char3.glb', (gltf) => {
+    new GLTFLoader().load('/models/tpp_character.glb', (gltf) => {
         const model = gltf.scene;
         model.traverse((object) => {
             if (object.isMesh) object.castShadow = true;
