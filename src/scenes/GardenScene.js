@@ -123,7 +123,22 @@ function loadGround(scene) {
     }
     )
 
-    const gltfLoader = new GLTFLoader()
+    // FOG
+    const fogColor = new THREE.Color(0xD3D3D3); // Light gray color
+    scene.fog = new THREE.FogExp2(fogColor, 0.005);
+
+
+    
+
+    // hdri
+    const rgbeLoader = new RGBELoader();
+    rgbeLoader.load('/models/forest2.hdr', (hdrTexture) => {
+        hdrTexture.mapping = THREE.EquirectangularRefractionMapping;
+        scene.background = hdrTexture;  // Set HDR as the background
+        scene.environment = hdrTexture;  // Set HDR as the environment map for lighting
+    });
+
+
 
     // Other models
 
