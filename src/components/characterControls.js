@@ -15,8 +15,8 @@ export class CharacterControls {
         this.rotateQuarternion = new THREE.Quaternion();
         this.cameraTarget = new THREE.Vector3();
         this.fadeDuration = 0.2; // Default fade duration
-        this.runVelocity = 15; // Run speed
-        this.walkVelocity = 2; // Walk speed
+        this.runVelocity = 6; // Run speed
+        this.walkVelocity = 3.4; // Walk speed
 
         // Set up animations
         this.animationsMap.forEach((value, key) => {

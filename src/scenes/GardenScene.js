@@ -4,6 +4,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { CharacterControls } from '../components/characterControls'; // Adjust path if needed
 import { KeyDisplay, W, A, S, D, SHIFT } from '../components/utils'; // Import KeyDisplay and controls
 import { RGBELoader } from 'three/examples/jsm/Addons.js';
+import { createTree } from '../components/tree';
+import { create3DText } from '../components/customText';
+
 
 export function createGardenScene() {
     const scene = new THREE.Scene();
@@ -78,29 +81,45 @@ function loadGround(scene) {
     ground.receiveShadow = true;
     scene.add(ground);
 
-    const doorGeometry = new THREE.PlaneGeometry(5,10)
-    const doorMaterial = new THREE.MeshStandardMaterial({color: 0xff0000})
-    const doorToHerbalGarden = new THREE.Mesh(doorGeometry,doorMaterial)
-    doorToHerbalGarden.position.z = 20
-    doorToHerbalGarden.position.x = 2
-    scene.add(doorToHerbalGarden)
+    // const doorGeometry = new THREE.PlaneGeometry(5,10)
+    // const doorMaterial = new THREE.MeshStandardMaterial({color: 0xff0000})
+    // const doorToHerbalGarden = new THREE.Mesh(doorGeometry,doorMaterial)
+    // doorToHerbalGarden.position.x = 2
+    // doorToHerbalGarden.position.z = 20
+    // scene.add(doorToHerbalGarden)
 
 
     const cubeGeometry = new THREE.BoxGeometry(10,10,10)
     const cubeGeoMesh = new THREE.MeshStandardMaterial({color: 0xFFC0CB })
     const cubeGeo = new THREE.Mesh(cubeGeometry,cubeGeoMesh)
-    cubeGeo.position.z = 60
     cubeGeo.position.x = 20
+    cubeGeo.position.z = 60
     scene.add(cubeGeo)
 
 
     const cubeGeometry2 = new THREE.BoxGeometry(10,10,10)
     const cubeGeoMesh2 = new THREE.MeshStandardMaterial({color: 0xFFA500 })
     const cubeGeo2 = new THREE.Mesh(cubeGeometry2,cubeGeoMesh2)
-    cubeGeo2.position.z = 20
     cubeGeo2.position.x =60
+    cubeGeo2.position.z = 20
     scene.add(cubeGeo2)
 
+
+    // trees
+    scene.add(createTree(10, 0));  // Center tree
+    scene.add(createTree(20, 5)); // Tree offset to the side
+    scene.add(createTree(35, -5)); // Another offset tree
+    scene.add(createTree(-65, -15)); // Another offset tree
+    scene.add(createTree(33, 33)); // Another offset tree
+    scene.add(createTree(22, 25)); // Another offset tree
+    scene.add(createTree(-5, 22)); // Another offset tree
+
+    // 3d texts 
+    // Create the scene and add 3D text
+(async () => {
+    await create3DText(scene, "HELLO WORLD", 0, 1,0 , 1);
+  })();
+  
 
     const gltfLoader = new GLTFLoader()
 
@@ -160,3 +179,5 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
         updateCharacter();
     });
 }
+
+
