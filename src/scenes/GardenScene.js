@@ -6,12 +6,17 @@ import { KeyDisplay, W, A, S, D, SHIFT } from '../components/utils'; // Import K
 import { RGBELoader } from 'three/examples/jsm/Addons.js';
 import { createTree } from '../components/tree';
 
+let camera;  // Declare camera variable globally
+
+// Raycaster and mouse vector initialization
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();  // Store mouse coordinates
 
 export function createGardenScene() {
     const scene = new THREE.Scene();
     scene.background = new THREE.Color(0xa8def0);
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);  // Use global camera
     camera.position.set(0, 4, 4);
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -29,6 +34,7 @@ export function createGardenScene() {
 
     setupLighting(scene);
     loadGround(scene);
+    addPlants(scene);
 
     const keysPressed = {}; // For tracking key presses
     const keyDisplay = new KeyDisplay(); // Visualize key presses
@@ -48,7 +54,11 @@ export function createGardenScene() {
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
+
     window.addEventListener('resize', onWindowResize);
+
+    // Mouse click event listener for raycasting
+    window.addEventListener('click', (event) => onMouseClick(event, scene), false);  // Pass scene here
 
     animate();
 
@@ -58,8 +68,35 @@ export function createGardenScene() {
         camera,
         cleanup: () => {
             window.removeEventListener('resize', onWindowResize);
+            window.removeEventListener('click', onMouseClick);
         },
     };
+}
+
+function onMouseClick(event, scene) {  // Accept scene as a parameter
+    // Ensure camera is defined
+    if (!camera) {
+        console.error('Camera is not defined!');
+        return;
+    }
+
+    // Convert mouse coordinates to normalized device coordinates (-1 to +1)
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Update the raycaster with the camera and mouse coordinates
+    raycaster.setFromCamera(mouse, camera);  // Correct usage
+
+    // Cast the ray and check for intersections
+    const intersects = raycaster.intersectObject(scene, true);
+
+    if (intersects.length > 0) {
+        const intersect = intersects[0];
+        const point = intersect.point; // The coordinates of the intersection point
+
+        // Log the intersection coordinates
+        console.log('Mouse clicked at:', point);
+    }
 }
 
 function setupLighting(scene) {
@@ -72,89 +109,81 @@ function setupLighting(scene) {
     scene.add(directionalLight);
 }
 
+function addPlants(scene) {
+
+    const coordinates = [ 
+        [-9.98, 1.40, -11.20], 
+        [-9.37, 1.40, -13.04], 
+        [-8.59, 1.40, -14.88], 
+        [-7.83, 1.40, -16.54], 
+        [-6.97, 1.40, -18.70], 
+        [0.66, 1.40, -15.72], 
+        [2.31, 1.40, -14.89], 
+        [3.99, 1.40, -14.54], 
+        [5.82, 1.40, -13.57], 
+        [11.82, 1.40, -10.59], 
+        [11.05, 1.40, -0.873], 
+        [10.46, 1.40, -6.88], 
+        [9.79, 1.40, -5.10], 
+        [8.91, 1.40, -3.35],
+        [7.59,1.40,-12.75],
+        [11.22,1.40,-8.72]
+      ];
+
+      for (let index = 0; index < coordinates.length; index++) {
+        new GLTFLoader().load('/models/plants/plant.glb', (gltf) => {
+            const model = gltf.scene;
+            model.position.set(coordinates[index][0], coordinates[index][1], coordinates[index][2]);
+            model.scale.set(0.02, 0.02, 0.02);
+            scene.add(model);
+        });
+        
+      }
+   
+}
+
 function loadGround(scene) {
-    // const groundGeometry = new THREE.PlaneGeometry(500, 500);
-    // const groundMaterial = new THREE.MeshStandardMaterial({ color: 0x228b22 }); // Green for the garden
-    // const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    // ground.rotation.x = -Math.PI / 2;
-    // ground.receiveShadow = true;
-    // scene.add(ground);
-
-    // const doorGeometry = new THREE.PlaneGeometry(5,10)
-    // const doorMaterial = new THREE.MeshStandardMaterial({color: 0xff0000})
-    // const doorToHerbalGarden = new THREE.Mesh(doorGeometry,doorMaterial)
-    // doorToHerbalGarden.position.x = 2
-    // doorToHerbalGarden.position.z = 20
-    // scene.add(doorToHerbalGarden)
-
-       // Main Garden
-       new GLTFLoader().load('/models/garden-final.glb', (gltf) => {
+    new GLTFLoader().load('/models/garden-final.glb', (gltf) => {
         const model = gltf.scene;
-        model.position.set(0,1,0)
-        // model.scale.set(0.15,0.15,0.15)
-        model.scale.set(3,3,3)
-        scene.add(model)
+        model.position.set(0, 1, 0);
+        model.scale.set(3, 3, 3);
+        scene.add(model);
+    });
 
-    }
-    )
+    const cubeGeometry = new THREE.BoxGeometry(10, 10, 10);
+    const cubeGeoMesh = new THREE.MeshStandardMaterial({ color: 0xFFC0CB });
+    const cubeGeo = new THREE.Mesh(cubeGeometry, cubeGeoMesh);
+    cubeGeo.position.x = 20;
+    cubeGeo.position.z = 60;
+    scene.add(cubeGeo);
 
-    const cubeGeometry = new THREE.BoxGeometry(10,10,10)
-    const cubeGeoMesh = new THREE.MeshStandardMaterial({color: 0xFFC0CB })
-    const cubeGeo = new THREE.Mesh(cubeGeometry,cubeGeoMesh)
-    cubeGeo.position.x = 20
-    cubeGeo.position.z = 60
-    scene.add(cubeGeo)
+    const cubeGeometry2 = new THREE.BoxGeometry(10, 10, 10);
+    const cubeGeoMesh2 = new THREE.MeshStandardMaterial({ color: 0xFFA500 });
+    const cubeGeo2 = new THREE.Mesh(cubeGeometry2, cubeGeoMesh2);
+    cubeGeo2.position.x = 60;
+    cubeGeo2.position.z = 20;
+    scene.add(cubeGeo2);
 
-
-    const cubeGeometry2 = new THREE.BoxGeometry(10,10,10)
-    const cubeGeoMesh2 = new THREE.MeshStandardMaterial({color: 0xFFA500 })
-    const cubeGeo2 = new THREE.Mesh(cubeGeometry2,cubeGeoMesh2)
-    cubeGeo2.position.x =60
-    cubeGeo2.position.z = 20
-    scene.add(cubeGeo2)
-
-
-    // TEXT
     new GLTFLoader().load('/models/TEXT/garden.glb', (gltf) => {
         const model = gltf.scene;
-        model.position.set(0,8,0)
-        model.scale.set(0.15,0.15,0.15)
-        scene.add(model)
+        model.position.set(0, 8, 0);
+        model.scale.set(0.15, 0.15, 0.15);
+        scene.add(model);
+    });
 
-    }
-    )
+    new GLTFLoader().load('/models/garden_bounds.glb', (gltf) => {
+        const model = gltf.scene;
+        model.position.set(0, 1, 0);
+        model.scale.set(3, 3, 3);
+        scene.add(model);
+    });
 
-    // FOG
-    // const fogColor = new THREE.Color('#708090'); // Light gray color
-    // scene.fog = new THREE.FogExp2(fogColor, 0.1);
-
-// bounding path
- // TEXT
- new GLTFLoader().load('/models/garden_bounds.glb', (gltf) => {
-    const model = gltf.scene;
-    model.position.set(0,1,0)
-    // model.scale.set(0.15,0.15,0.15)
-    model.scale.set(3,3,3)
-    scene.add(model)
-
-}
-)
-    
-
-    // hdri
     const rgbeLoader = new RGBELoader();
     rgbeLoader.load('/models/thisiscool.hdr', (hdrTexture) => {
         hdrTexture.mapping = THREE.EquirectangularRefractionMapping;
-        scene.background = hdrTexture;  // Set HDR as the background
-        scene.environment = hdrTexture;  // Set HDR as the environment map for lighting
+        scene.background = hdrTexture;
+        scene.environment = hdrTexture;
     });
-
-
-
-    // Other models
-
-    // Load hdr here later
-
 }
 
 function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
@@ -163,9 +192,9 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
         model.traverse((object) => {
             if (object.isMesh) object.castShadow = true;
         });
-        model.position.z= 10
-        model.position.x= -14
-        model.position.y = 0.8
+        model.position.z = 10;
+        model.position.x = -14;
+        model.position.y = 0.8;
         scene.add(model);
 
         const mixer = new THREE.AnimationMixer(model);
@@ -193,8 +222,6 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
             }
         });
 
-      
-
         document.addEventListener('keyup', (event) => {
             const key = event.key.toLowerCase();
             keysPressed[key] = false;
@@ -210,5 +237,3 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
         updateCharacter();
     });
 }
-
-
