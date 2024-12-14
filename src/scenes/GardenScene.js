@@ -163,54 +163,61 @@ function addYoga(scene) {
 
 function addHomeopathy(scene) {
   const coordinates = [
-    [-25.067827896408208, 1.402312182167159, -18.7675033915934],
-    [-26.66578360884982, 1.402312173776966, -19.55693341172318],
-    [-28.26307570625974, 1.4023121846806457, -20.06017810892425],
-    [-29.77896268927036, 1.4023121800071645, -20.760372957668835],
-    [-31.17467401434882, 1.4023121713052515, -21.470244383414368],
-    [-32.58947987740616, 1.4023121696168332, -23.42104789446237],
-    [-32.038537931713265, 1.4023121717434845, -24.839853042136802],
-    [-31.54445714040098, 1.402312173163259, -26.094667783151117],
-    [-30.98514114825248, 1.402312172731669, -27.441706088119663],
-    [-30.464542747332636, 1.4023121762899584, -28.83816781751784],
-    [-28.073499184592702, 1.4023121720590537, -29.37333396403401],
-    [-26.53510342235665, 1.4023121652141883, -28.631594205183667],
-    [-24.943663146562958, 1.4023121711721935, -28.057497553869645],
-    [-23.507851044665266, 1.4023121722764325, -27.476249929543354],
-    [-21.702887628555352, 1.4023121853766707, -26.91911930295456],
+    // [-25.067827896408208, 1.402312182167159, -18.7675033915934],
+    [-26.66578360884982, 1.402312173776966, -19.55693341172318,"akarakara"],
+    // [-28.26307570625974, 1.4023121846806457, -20.06017810892425],
+    [-29.77896268927036, 1.4023121800071645, -20.760372957668835,"aloe vera"],
+    // [-31.17467401434882, 1.4023121713052515, -21.470244383414368],
+    [-32.58947987740616, 1.4023121696168332, -23.42104789446237,"alpinia calcarata"],
+    // [-32.038537931713265, 1.4023121717434845, -24.839853042136802],
+    [-31.54445714040098, 1.402312173163259, -26.094667783151117,"arive dantu"],
+    // [-30.98514114825248, 1.402312172731669, -27.441706088119663],
+    [-30.464542747332636, 1.4023121762899584, -28.83816781751784,"clove"],
+    // [-28.073499184592702, 1.4023121720590537, -29.37333396403401],
+    [-26.53510342235665, 1.4023121652141883, -28.631594205183667,"fenugreek"],
+    // [-24.943663146562958, 1.4023121711721935, -28.057497553869645],
+    [-23.507851044665266, 1.4023121722764325, -27.476249929543354,"kalmegh"],
+    // [-21.702887628555352, 1.4023121853766707, -26.91911930295456],
   ];
   for (let index = 0; index < coordinates.length; index++) {
-    new GLTFLoader().load("/models/plants/plant.glb", (gltf) => {
+    new GLTFLoader().load(`/models/plants/${coordinates[index][3]}.glb`, (gltf) => {
       const model = gltf.scene;
-      model.position.set(
-        coordinates[index][0],
-        coordinates[index][1],
-        coordinates[index][2]
-      );
-      model.scale.set(0.02, 0.02, 0.02);
-      scene.add(model);
+      
+      // Set the model's original name in a custom property
+      model.originalName = coordinates[index][3]; // Store the original name
+      
+      model.name = coordinates[index][3];  // Set the name for other logic if needed
+      objectsToIntersect.push(model);  // Add the model to objectsToIntersect
+      model.position.set(coordinates[index][0], coordinates[index][1], coordinates[index][2]);
+      model.scale.set(0.5, 0.5, 0.5);
+      scene.add(model);  // Add model to the scene
+
+      console.log("Original Name (Stored):", model.originalName);  // Just for debugging
     });
   }
 }
 
+
+
 function addPlants(scene) {
   const coordinates = [
+
     [-10.5, 1.4, -11.2, "arjuna"],
-    [-13, 1.4, -12.99, "bael"],
-    [-10.59, 1.4, -14.88, "brahmi"],
-    [-11, 1.4, -16.54, "calendula"],
-    [-6.97, 1.4, -18.7, "roxburgh"],
-    [0.66, 1.4, -15.72, "roxburgh"],
-    [2.31, 1.4, -14.89, "roxburgh"],
-    [3.99, 1.4, -14.54, "roxburgh"],
-    [5.82, 1.4, -13.57, "roxburgh"],
-    [11.82, 1.4, -10.59, "roxburgh"],
-    [11.05, 1.4, -0.873, "roxburgh"],
-    [10.46, 1.4, -6.88, "roxburgh"],
-    [9.79, 1.4, -5.1, "roxburgh"],
-    [8.91, 1.4, -3.35, "roxburgh"],
-    [7.59, 1.4, -12.75, "roxburgh"],
-    [11.22, 1.4, -8.72, "roxburgh"],
+    // [-13, 1.4, -12.99, "bael"],
+    [-8.59, 1.4, -14.88, "bael"],
+    // [-11, 1.4, -16.54, "calendula"],
+    [-6.97, 1.4, -18.7, "brahmi"],
+    // [0.66, 1.4, -15.72, "roxburgh"],
+    [2.31, 1.4, -14.89, "calendula"],
+    // [3.99, 1.4, -14.54, "roxburgh"],
+    [5.82, 1.4, -13.57, "clove"],
+    // [11.82, 1.4, -10.59, "roxburgh"],
+    [9.54, 1.4, -5.23, "fenugreek"],
+    // [10.46, 1.4, -6.88, "roxburgh"],
+    [11, 1.4, -8.65, "roxburgh"],
+    // [8.91, 1.4, -3.35, "roxburgh"],
+    // [7.59, 1.4, -12.75, "roxburgh"],
+    // [11.22, 1.4, -8.72, "roxburgh"]
   ];
 
   for (let index = 0; index < coordinates.length; index++) {
@@ -313,14 +320,10 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
 
         // Log the intersection coordinates and the name of the object
         console.log("Mouse clicked at:", point);
-        console.log("Intersected object name:", intersect.object.originalName);
+        // console.log("Intersected object name:", intersect.object.originalName);
+        console.log("Intersected object name:", intersect.object.name);
 
-        // Example of handling interaction with specific objects
-        if (intersect.object.name === "arjuna") {
-          console.log("Clicked on Arjuna plant!");
-        } else if (intersect.object.name === "bael") {
-          console.log("Clicked on Bael plant!");
-        }
+       
       }
 
       const delta = clock.getDelta();
