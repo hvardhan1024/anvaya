@@ -6,6 +6,8 @@ import { KeyDisplay, W, A, S, D, SHIFT } from "../components/utils"; // Import K
 import { RGBELoader } from "three/examples/jsm/Addons.js";
 import { createTree } from "../components/tree";
 
+document.getElementById("info-card2").style.display = 'none'
+
 let camera; // Declare camera variable globally
 
 // Raycaster and mouse vector initialization
@@ -164,44 +166,58 @@ function addYoga(scene) {
 function addHomeopathy(scene) {
   const coordinates = [
     // [-25.067827896408208, 1.402312182167159, -18.7675033915934],
-    [-26.66578360884982, 1.402312173776966, -19.55693341172318,"akarakara"],
+    [-26.66578360884982, 1.402312173776966, -19.55693341172318, "akarakara"],
     // [-28.26307570625974, 1.4023121846806457, -20.06017810892425],
-    [-29.77896268927036, 1.4023121800071645, -20.760372957668835,"aloe vera"],
+    [-29.77896268927036, 1.4023121800071645, -20.760372957668835, "aloe vera"],
     // [-31.17467401434882, 1.4023121713052515, -21.470244383414368],
-    [-32.58947987740616, 1.4023121696168332, -23.42104789446237,"alpinia calcarata"],
+    [
+      -32.58947987740616,
+      1.4023121696168332,
+      -23.42104789446237,
+      "alpinia calcarata",
+    ],
     // [-32.038537931713265, 1.4023121717434845, -24.839853042136802],
-    [-31.54445714040098, 1.402312173163259, -26.094667783151117,"arive dantu"],
+    [-31.54445714040098, 1.402312173163259, -26.094667783151117, "arive dantu"],
     // [-30.98514114825248, 1.402312172731669, -27.441706088119663],
-    [-30.464542747332636, 1.4023121762899584, -28.83816781751784,"clove"],
+    [
+      -30.464542747332636,
+      1.4023121762899584,
+      -28.83816781751784,
+      "mexican poppy",
+    ],
     // [-28.073499184592702, 1.4023121720590537, -29.37333396403401],
-    [-26.53510342235665, 1.4023121652141883, -28.631594205183667,"fenugreek"],
+    [-26.53510342235665, 1.4023121652141883, -28.631594205183667, "fenugreek"],
     // [-24.943663146562958, 1.4023121711721935, -28.057497553869645],
-    [-23.507851044665266, 1.4023121722764325, -27.476249929543354,"kalmegh"],
+    [-23.507851044665266, 1.4023121722764325, -27.476249929543354, "kalmegh"],
     // [-21.702887628555352, 1.4023121853766707, -26.91911930295456],
   ];
   for (let index = 0; index < coordinates.length; index++) {
-    new GLTFLoader().load(`/models/plants/${coordinates[index][3]}.glb`, (gltf) => {
-      const model = gltf.scene;
-      
-      // Set the model's original name in a custom property
-      model.originalName = coordinates[index][3]; // Store the original name
-      
-      model.name = coordinates[index][3];  // Set the name for other logic if needed
-      objectsToIntersect.push(model);  // Add the model to objectsToIntersect
-      model.position.set(coordinates[index][0], coordinates[index][1], coordinates[index][2]);
-      model.scale.set(0.5, 0.5, 0.5);
-      scene.add(model);  // Add model to the scene
+    new GLTFLoader().load(
+      `/models/plants/${coordinates[index][3]}.glb`,
+      (gltf) => {
+        const model = gltf.scene;
 
-      console.log("Original Name (Stored):", model.originalName);  // Just for debugging
-    });
+        // Set the model's original name in a custom property
+        model.originalName = coordinates[index][3]; // Store the original name
+
+        model.name = coordinates[index][3]; // Set the name for other logic if needed
+        objectsToIntersect.push(model); // Add the model to objectsToIntersect
+        model.position.set(
+          coordinates[index][0],
+          coordinates[index][1],
+          coordinates[index][2]
+        );
+        model.scale.set(0.5, 0.5, 0.5);
+        scene.add(model); // Add model to the scene
+
+        console.log("Original Name (Stored):", model.originalName); // Just for debugging
+      }
+    );
   }
 }
 
-
-
 function addPlants(scene) {
   const coordinates = [
-
     [-10.5, 1.4, -11.2, "arjuna"],
     // [-13, 1.4, -12.99, "bael"],
     [-8.59, 1.4, -14.88, "bael"],
@@ -221,20 +237,27 @@ function addPlants(scene) {
   ];
 
   for (let index = 0; index < coordinates.length; index++) {
-    new GLTFLoader().load(`/models/plants/${coordinates[index][3] || "roxburgh"}.glb`, (gltf) => {
-      const model = gltf.scene;
-      
-      // Set the model's original name in a custom property
-      model.originalName = coordinates[index][3]; // Store the original name
-      
-      model.name = coordinates[index][3];  // Set the name for other logic if needed
-      objectsToIntersect.push(model);  // Add the model to objectsToIntersect
-      model.position.set(coordinates[index][0], coordinates[index][1], coordinates[index][2]);
-      model.scale.set(0.5, 0.5, 0.5);
-      scene.add(model);  // Add model to the scene
+    new GLTFLoader().load(
+      `/models/plants/${coordinates[index][3] || "roxburgh"}.glb`,
+      (gltf) => {
+        const model = gltf.scene;
 
-      console.log("Original Name (Stored):", model.originalName);  // Just for debugging
-    });
+        // Set the model's original name in a custom property
+        model.originalName = coordinates[index][3]; // Store the original name
+
+        model.name = coordinates[index][3]; // Set the name for other logic if needed
+        objectsToIntersect.push(model); // Add the model to objectsToIntersect
+        model.position.set(
+          coordinates[index][0],
+          coordinates[index][1],
+          coordinates[index][2]
+        );
+        model.scale.set(0.5, 0.5, 0.5);
+        scene.add(model); // Add model to the scene
+
+        console.log("Original Name (Stored):", model.originalName); // Just for debugging
+      }
+    );
   }
 }
 
@@ -323,7 +346,53 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
         // console.log("Intersected object name:", intersect.object.originalName);
         console.log("Intersected object name:", intersect.object.name);
 
-       
+        let mappedValue = null;
+        switch (intersect.object.name) {
+          case "Plane038_2":
+            mappedValue = "arjuna";
+            break;
+          case "Plane046_2":
+            mappedValue = "bael";
+            break;
+          case "Plane041_1":
+            mappedValue = "brahmi";
+            break;
+          case "Plane043_1":
+            mappedValue = "calendula";
+            break;
+          case "Plane053_2":
+            mappedValue = "clove";
+            break;
+          case "Plane006_3":
+            mappedValue = "roxburgh fig";
+            break;
+          case "Plane061_1":
+            mappedValue = "fenugreek";
+            break;
+          case "Plane066_2":
+            mappedValue = "akarakara";
+            break;
+          case "Plane078_1":
+            mappedValue = "aloe vera";
+            break;
+          case "Plane079_1":
+            mappedValue = "alpinia calcarata";
+            break;
+          case "Plane092_1":
+            mappedValue = "arive dantu";
+            break;
+          case "Plane068":
+            mappedValue = "mexican poppy";
+            break;
+          case "Plane094":
+            mappedValue = "kalmegh";
+            break;
+          default:
+            mappedValue = "Unknown";
+            break;
+        }
+        displayInfo(mappedValue)
+
       }
 
       const delta = clock.getDelta();
@@ -332,4 +401,105 @@ function setupCharacter(scene, orbitControls, camera, keysPressed, keyDisplay) {
     }
     updateCharacter();
   });
+}
+
+
+const plant_data = {
+    "arjuna": {
+        "scientificName": "Terminalia arjuna",
+        "description": "A large deciduous tree known for its bark's medicinal properties, revered in Ayurveda for heart health.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Treats heart conditions, hypertension, and cholesterol. Antioxidant properties support overall cardiovascular health."
+    },
+    "brahmi": {
+        "scientificName": "Bacopa monnieri",
+        "description": "A creeping herb traditionally used to boost memory and cognitive function.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Enhances memory, reduces anxiety, and improves brain function. Effective in managing Alzheimer’s and epilepsy."
+    },
+    "roxburgh fig": {
+        "scientificName": "Ficus auriculata",
+        "description": "A tropical fig tree with edible fruits, rich in medicinal uses.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Improves digestive health, treats ulcers, and aids in diabetes management."
+    },
+    "calendula": {
+        "scientificName": "Calendula officinalis",
+        "description": "A vibrant flower known for its healing and anti-inflammatory properties.",
+        "category": "Naturopathy",
+        "medicalUsesAndBenefits": "Promotes wound healing, treats skin conditions, and reduces inflammation."
+    },
+    "bael": {
+        "scientificName": "Aegle marmelos",
+        "description": "A sacred tree in India with fruits and leaves used in traditional medicine.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Treats diarrhea, constipation, and digestive disorders. Strengthens the immune system."
+    },
+    "fenugreek": {
+        "scientificName": "Trigonella foenum-graecum",
+        "description": "An annual herb used in cooking and medicine for its seed and leaf benefits.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Controls blood sugar, boosts lactation in nursing mothers, and reduces inflammation."
+    },
+    "kalmegh": {
+        "scientificName": "Andrographis paniculata",
+        "description": "A bitter herb widely used in Ayurvedic and Unani systems for immunity and liver health.",
+        "category": "Ayurveda and Unani",
+        "medicalUsesAndBenefits": "Treats fever, strengthens the liver, and boosts immunity."
+    },
+    "mexican poppy": {
+        "scientificName": "Argemone mexicana",
+        "description": "A wildflower with distinct yellow flowers and spiky leaves, used traditionally for medicinal purposes.",
+        "category": "Siddha",
+        "medicalUsesAndBenefits": "Treats skin infections, improves digestion, and helps manage respiratory issues."
+    },
+    "aloe vera": {
+        "scientificName": "Aloe barbadensis miller",
+        "description": "A succulent plant known for its gel with multiple therapeutic uses.",
+        "category": "Ayurveda, Naturopathy",
+        "medicalUsesAndBenefits": "Soothes skin, promotes digestion, and boosts immunity."
+    },
+    "akarakara": {
+        "scientificName": "Anacyclus pyrethrum",
+        "description": "A perennial herb with roots used for medicinal purposes in traditional systems.",
+        "category": "Ayurveda and Unani",
+        "medicalUsesAndBenefits": "Acts as a natural aphrodisiac, improves oral health, and enhances cognitive function."
+    },
+    "alpinia calcarata": {
+        "scientificName": "Alpinia calcarata",
+        "description": "A perennial herb used in Ayurvedic medicine for its rhizomes.",
+        "category": "Ayurveda",
+        "medicalUsesAndBenefits": "Relieves respiratory conditions, improves digestion, and acts as an anti-inflammatory."
+    },
+    "arive dantu": {
+        "scientificName": "Amaranthus viridis",
+        "description": "A green leafy vegetable commonly used in Indian cooking and medicine.",
+        "category": "Siddha and Ayurveda",
+        "medicalUsesAndBenefits": "Boosts immunity, improves eye health, and provides essential nutrients."
+    }
+};
+
+function displayInfo(name) {
+    const infoClose2 = document.getElementById("info-close2");
+    const infoCard2 = document.getElementById("info-card2");
+    const plantName = document.querySelector('.plant-name');
+    const scientificName = document.querySelector('.scientific-name');
+    const description = document.querySelector('.description');
+    const category = document.querySelector('.category');
+    const medicalUsesAndBenefits = document.querySelector('.medicalUsesAndBenefits');
+
+    // Toggle Info Card
+    infoCard2.style.display = "block";
+
+    // Populate the card with plant data
+    plantName.innerHTML = name;
+    // scientificName.innerHTML = plant_data[name]["scientificName"];
+    description.innerHTML = plant_data[name]["description"];
+    category.innerHTML = plant_data[name]["category"];
+    medicalUsesAndBenefits.innerHTML = plant_data[name]["medicalUsesAndBenefits"];
+
+    // Close button functionality
+    infoClose2.addEventListener("click", () => {
+        infoCard2.style.display = "none";
+    });
 }

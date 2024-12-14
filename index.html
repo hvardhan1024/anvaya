@@ -15,6 +15,7 @@
     <div class="control-menu">
       <i class="fa-solid fa-circle-info" id="info-btn"></i>
       <i class="fa-solid fa-gear" id="settings-btn"></i>
+      <i class="fa-solid fa-robot" id="ai-btn"></i>
   </div>
 
 
@@ -52,6 +53,17 @@
     </div>
     
 
+       <!-- Info Card -->
+       <div class="info-card2" id="info-card2">
+        <button class="close-btn2" id="info-close2">&times;</button>
+        <h4>Name</h4><p class="plant-name"></p>
+        <h4>scientific Name</h4><p class="scientific-name"></p>
+        <h4>Description</h4><p class="description"></p>
+        <h4>Category</h4><p class="category"></p>
+        <h4>Medicinal uses and Benefits</h4><p class="medicalUsesAndBenefits"></p>
+      
+      </div>
+
   <!-- Settings Panel -->
   <div class="settings-panel" id="settings-panel">
       <label>
@@ -61,6 +73,89 @@
 
 
   </div>
+
+  <!-- <div class="ai-recognition">
+    <div id="upload-form">
+      <h1>Plant Identifier</h1>
+      <form id="imageForm">
+          <input type="file" id="image" name="image" accept="image/*" required><br><br>
+          <button type="submit">Upload</button>
+      </form>
+      <button id="capture">Capture from Camera</button>
+      <video id="camera" width="300" height="300" autoplay hidden></video>
+      <canvas id="snapshot" width="224" height="224" hidden></canvas>
+      <div id="result"></div>
+  </div>
+
+  <script>
+      const captureButton = document.getElementById('capture');
+      const camera = document.getElementById('camera');
+      const snapshot = document.getElementById('snapshot');
+      const imageForm = document.getElementById('imageForm');
+
+      // Event listener for the Capture button
+      captureButton.addEventListener('click', () => {
+          camera.hidden = false;
+          navigator.mediaDevices.getUserMedia({ video: true })
+              .then((stream) => {
+                  camera.srcObject = stream;
+                  camera.play();
+              })
+              .catch((err) => {
+                  alert('Camera access denied');
+                  console.error(err);
+              });
+      });
+
+      // Event listener for capturing an image from the video stream
+      camera.addEventListener('click', () => {
+          // Set canvas dimensions to 224x224
+          snapshot.width = 224;
+          snapshot.height = 224;
+
+          // Draw video frame onto canvas and resize it
+          const context = snapshot.getContext('2d');
+          context.drawImage(camera, 0, 0, 224, 224); // Resize the image to 224x224
+
+          snapshot.hidden = false;
+
+          // Convert canvas to blob
+          snapshot.toBlob((blob) => {
+              if (blob) {
+                  const formData = new FormData();
+                  formData.append('image', blob, 'capture.png');
+                  fetch('/upload', { method: 'POST', body: formData })
+                      .then((response) => response.json())
+                      .then((result) => {
+                          camera.hidden = true;
+                          document.getElementById('result').textContent = Prediction: ${result.label}, Confidence: ${result.confidence};
+                      })
+                      .catch((err) => {
+                          console.error('Error uploading image:', err);
+                          document.getElementById('result').textContent = 'Error processing the image from the camera.';
+                      });
+              } else {
+                  console.error('Error capturing image from camera.');
+                  document.getElementById('result').textContent = 'Error capturing image.';
+              }
+          });
+      });
+
+      // // Event listener for file upload form
+      // imageForm.addEventListener('submit', async (e) => {
+      //     e.preventDefault();
+      //     const formData = new FormData(imageForm);
+      //     const response = await fetch('/upload', { method: 'POST', body: formData });
+      //     const result = await response.json();
+      //     if (response.ok) {
+      //         document.getElementById('result').textContent = Prediction: ${result.label}, Confidence: ${result.confidence};
+      //     } else {
+      //         document.getElementById('result').textContent = Error: ${result.error};
+      //     }
+      // });
+  </script>
+
+  </div> -->
 
   <script type="module" src="/src/main.js"></script>
   </body>

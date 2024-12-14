@@ -1,16 +1,14 @@
-
-        [-13, 1.40, -12.99,'bael'], 
-        [-10.59, 1.40, -14.88,'brahmi'], 
-        [-11, 1.40, -16.54,'calendula'], 
-        [-6.97, 1.40, -18.70,'roxburgh'], 
-        [0.66, 1.40, -15.72,'roxburgh'],  
-        [2.31, 1.40, -14.89,'roxburgh'], 
-        [3.99, 1.40, -14.54,'roxburgh'],  
-        [5.82, 1.40, -13.57,'roxburgh'], 
-        [11.82, 1.40, -10.59,'roxburgh'],  
-        [11.05, 1.40, -0.873,'roxburgh'],  
-        [10.46, 1.40, -6.88,'roxburgh'],  
-        [9.79, 1.40, -5.10,'roxburgh'],  
-        [8.91, 1.40, -3.35,'roxburgh'], 
-        [7.59,1.40,-12.75,'roxburgh'], 
-        [11.22,1.40,-8.72,'roxburgh'], 
+    <!-- Chatbot Modal -->
+    <div class="chatbot-modal" id="chatbot-modal">
+      <div class="chatbot-header">
+        <h2>Chatbot</h2>
+        <button class="chatbot-close" id="chatbot-close">&times;</button>
+      </div>
+      <div class="chatbot-body">
+        <div id="chatbot-messages" class="chatbot-messages"></div>
+        <div class="chatbot-input-area">
+          <input type="text" id="chatbot-input" placeholder="Type your message..." />
+          <button id="chatbot-send">Send</button>
+        </div>
+      </div>
+    </div>

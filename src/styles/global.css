@@ -205,3 +205,47 @@ scale: 1.1;
     border-radius: 8px;
     display: block;
 }
+
+
+
+
+
+/* plant info */
+
+/* Glassmorphism Info Card */
+.info-card2 {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+  color: #333;
+  z-index: 999;
+  display: none;
+}
+
+.info-card2 .close-btn .info-close2{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.info-card2 .close-btn:hover {
+  background: #d32f2f;
+}
