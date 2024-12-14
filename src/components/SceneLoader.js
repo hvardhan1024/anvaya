@@ -30,7 +30,7 @@ export function loadScene(sceneName) {
     }
 
 
-    createNavigationButtons()
+    // createNavigationButtons()
 }
 
 function createNavigationButtons() {
